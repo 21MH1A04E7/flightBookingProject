@@ -7,6 +7,6 @@ const app=express()
 app.use('/api',apiRoutes)
 
 app.listen(ServerConfig.PORT,()=>{
-    console.log(`server is running on port no ${ServerConfig.PORT}`)
+    console.log(`server is running on port_no ${ServerConfig.PORT}`)
     // Logger.info("Successfuly started the server","root",{})
 })
