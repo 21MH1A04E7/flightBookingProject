@@ -1,4 +1,4 @@
-const {ServerConfig}=require('./index')
+
 require('dotenv').config()
 
 module.exports = {
@@ -11,12 +11,10 @@ module.exports = {
       database: process.env.DB_NAME,
     },
     migrations: {
-      directory: '../migrations',
+      directory: 'src/migrations',
     },
     seeds: {
-      directory: '../seeds'
+      directory: 'src/seeds'
     }
   }
 };
-
-console.log(process.env.DB_HOST)
