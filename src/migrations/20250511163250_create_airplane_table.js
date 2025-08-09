@@ -10,6 +10,11 @@ exports.up = function(knex) {
     table.timestamp('created_at').defaultTo(knex.fn.now());
     table.timestamp('updated_at').defaultTo(knex.fn.now());
   })
+  .then(()=>{
+    return knex.raw(`
+      ALTER TABLE airplane
+      ADD CONSTRAINT capacity_max CHECK (capacity <= 500 and capacity>=1)
+    `)})
 };
 
 /**
