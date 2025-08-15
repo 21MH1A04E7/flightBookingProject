@@ -13,7 +13,7 @@ exports.up = function(knex) {
   .then(()=>{
     return knex.raw(`
       ALTER TABLE airplane
-      ADD CONSTRAINT capacity_max CHECK (capacity <= 500 and capacity>=1)
+      ADD CONSTRAINT capacity_max CHECK (capacity <= 1000 and capacity>=1)
     `)})
 };
 

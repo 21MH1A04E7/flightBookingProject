@@ -24,6 +24,27 @@ async function createAirplane(data){
     }
 }
 
+async function getAirplanes() {
+    const airplaneRepository=new AirplaneRepository(knex,Airplane.tableName)
+    try{
+        const airplances=await airplaneRepository.getAll(knex,Airplane.tableName)
+        return airplances
+    }catch(error){
+        throw new AppError("Internal server error: Can not fetch the data of all airplane",StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+}
+async function getAirplane(id) {
+    const airplaneRepository=new AirplaneRepository(knex,Airplane.tableName)
+    try{
+        const airplane=await airplaneRepository.get(id)
+        return airplane
+    }catch(error){
+        throw new AppError("Internal server error: Can not feth the data of plance",StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+    
+}
 module.exports={
-    createAirplane
+    createAirplane,
+    getAirplanes,
+    getAirplane 
 }
