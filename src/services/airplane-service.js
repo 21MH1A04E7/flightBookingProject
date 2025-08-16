@@ -3,6 +3,7 @@ const knex=require('../db/knex')
 const {Airplane}=require('../models')
 const AppError=require('../utils/errors/app-error')
 const { StatusCodes } = require('http-status-codes');
+const { SuccessResponse } = require('../utils/common');
 
 
 async function createAirplane(data){
@@ -56,9 +57,24 @@ async function  deleteAirplane(id) {
         throw new AppError("Internal server error: fail to delete the airplane",StatusCodes.INTERNAL_SERVER_ERROR)
     }
 }
+
+async function updateAirplane(data) {
+    const airplaneRepository=new AirplaneRepository(knex,Airplane.tableName)
+    try{
+        const response=airplaneRepository.update(data)
+        return response
+    }catch(error){
+        if(error.StatusCodes===StatusCodes.NOT_FOUND){
+            throw new AppError("The airplane you requested to update not found",StatusCodes.NOT_FOUND)
+        }
+        throw new AppError("Internal server error: fail to delete the airplane",StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+  
+}
 module.exports={
     createAirplane,
     getAirplanes,
     getAirplane,
-    deleteAirplane
+    deleteAirplane,
+    updateAirplane
 }

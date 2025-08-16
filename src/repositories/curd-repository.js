@@ -52,6 +52,23 @@ class CrudRepository {
       throw error;
     }
   }
+  async update(data) {
+  try {
+    const records = await this.knex(this.table)
+      .where({ id: data.id })
+      .update(data);
+
+    if (records === 0) {
+      throw new AppError("Not able to find the resource", StatusCodes.NOT_FOUND);
+    }
+
+    return records; 
+  } catch (error) {
+    Logger.error("Error in CurdRepository : update");
+    throw error;
+  }
+}
+
 }
 
 module.exports = CrudRepository;
