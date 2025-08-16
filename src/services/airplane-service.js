@@ -43,8 +43,22 @@ async function getAirplane(id) {
     }
     
 }
+
+async function  deleteAirplane(id) {
+     const airplaneRepository=new AirplaneRepository(knex,Airplane.tableName)
+    try{
+        const response=airplaneRepository.delete(id)
+        return response
+    }catch(error){
+        if(error.StatusCodes===StatusCodes.NOT_FOUND){
+            throw new AppError("The airplane you requested to delete not found",StatusCodes.NOT_FOUND)
+        }
+        throw new AppError("Internal server error: fail to delete the airplane",StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+}
 module.exports={
     createAirplane,
     getAirplanes,
-    getAirplane 
+    getAirplane,
+    deleteAirplane
 }

@@ -1,4 +1,6 @@
+const { StatusCodes } = require('http-status-codes');
 const { Logger } = require('../config');
+const AppError = require('../utils/errors/app-error');
 
 
 class CrudRepository {
@@ -21,6 +23,9 @@ class CrudRepository {
   async delete(id) {
     try {
       const deletedCount = await this.knex(this.table).where({ id }).del();
+      if(!deletedCount){
+        throw new AppError("Not able to found the resource",StatusCodes.NOT_FOUND)
+      }
       return deletedCount;
     } catch (error) {
       Logger.error('Error in CrudRepository: delete');
