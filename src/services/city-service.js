@@ -23,6 +23,58 @@ async function  createCity(data) {
         throw new AppError("Internal server error",StatusCodes.INTERNAL_SERVER_ERROR);
     }  
 }
+
+async function getCities() {
+    const cityRepository=new CityRepository(knex,City.tableName)
+    try{
+        const airplances=await cityRepository.getAll(knex,City.tableName)
+        return airplances
+    }catch(error){
+        throw new AppError("Internal server error: Can not fetch the data of all airplane",StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+}
+async function getCity(id) {
+    const cityRepository=new CityRepository(knex,City.tableName)
+    try{
+        const airplane=await cityRepository.get(id)
+        return airplane
+    }catch(error){
+        throw new AppError("Internal server error: Can not feth the data of plance",StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+    
+}
+
+async function  deleteCity(id) {
+     const cityRepository=new CityRepository(knex,City.tableName)
+    try{
+        const response=cityRepository.delete(id)
+        return response
+    }catch(error){
+        if(error.StatusCodes===StatusCodes.NOT_FOUND){
+            throw new AppError("The airplane you requested to delete not found",StatusCodes.NOT_FOUND)
+        }
+        throw new AppError("Internal server error: fail to delete the airplane",StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+}
+
+async function updateCity(data) {
+    const cityRepository=new CityRepository(knex,City.tableName)
+    try{
+        const response=cityRepository.update(data)
+        return response
+    }catch(error){
+        if(error.StatusCodes===StatusCodes.NOT_FOUND){
+            throw new AppError("The airplane you requested to update not found",StatusCodes.NOT_FOUND)
+        }
+        throw new AppError("Internal server error: fail to delete the airplane",StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+  
+}
+
 module.exports={
-    createCity
+    createCity,
+    getCities,
+    getCity,
+    deleteCity,
+    updateCity
 }
