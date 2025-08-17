@@ -1,3 +1,4 @@
 module.exports={
-    Airplane:require('./airplane')
+    Airplane:require('./airplane'),
+    City:require('./city')
 }
